@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "stark_rpc",
+    "rpc_call"
+]
+resolver = "2"
