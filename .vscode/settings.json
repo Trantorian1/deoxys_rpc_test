@@ -3,5 +3,8 @@
         "./stark_rpc/Cargo.toml",
         "./rpc_call/Cargo.toml",
         "./rpc_call_derive/Cargo.toml"
+    ],
+    "conventionalCommits.scopes": [
+        "rpc_call"
     ]
 }

@@ -14,8 +14,6 @@ pub trait RpcCall {
     where
         Gclient: ClientT + 'b,
         Gresult: RpcCall + DeserializeOwned + 'b,
-        Params: ToRpcParams + Send + 'b,
-    {
-        client.request(method, params)
-    }
+        Params: ToRpcParams + Send + 'b
+    ;
 }
