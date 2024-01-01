@@ -1,6 +1,0 @@
-[submodule "stark_rpc"]
-	path = stark_rpc
-	url = git@github.com:Trantorian1/stark_rpc.git
-[submodule "rpc_call"]
-	path = rpc_call
-	url = git@github.com:Trantorian1/rpc_call.git
