@@ -46,15 +46,22 @@ pub fn rpc_test(args: TokenStream, input: TokenStream) -> TokenStream {
                 .with_context(|| format!("Could not retrieve test data from {path}"))
                 .unwrap();
 
-            let response_alchemy: #arg_struct = #arg_struct::call(&alchemy, &test_data.cmd, test_data.arg.clone()).await
-                .with_context(|| format!("Error waiting for rpc call response from Alchemy in test {path}"))
-                .unwrap();
+            let range = match test_data.block_range {
+                Some(range) => range.start_inclusive..=range.stop_inclusive,
+                None => 0..=1,
+            };
 
-            let response_deoxys: #arg_struct = #arg_struct::call(&deoxys, &test_data.cmd, test_data.arg.clone()).await
-                .with_context(|| format!("Error waiting for rpc call response from Deoxys in test {path}"))
-                .unwrap();
+            for _ in range {
+                let response_alchemy: #arg_struct = #arg_struct::call(&alchemy, &test_data.cmd, test_data.arg.clone()).await
+                    .with_context(|| format!("Error waiting for rpc call response from Alchemy in test {path}"))
+                    .unwrap();
 
-            assert_eq!(response_deoxys, response_alchemy);
+                let response_deoxys: #arg_struct = #arg_struct::call(&deoxys, &test_data.cmd, test_data.arg.clone()).await
+                    .with_context(|| format!("Error waiting for rpc call response from Deoxys in test {path}"))
+                    .unwrap();
+
+                assert_eq!(response_deoxys, response_alchemy);
+            }
         }       
     };
 
