@@ -1,7 +1,7 @@
 [workspace]
 members = [
-    "stark_rpc",
+    "rpc_test",
     "rpc_call",
-    "rpc_call_derive"
+    "rpc_call_derive",
 ]
 resolver = "2"
