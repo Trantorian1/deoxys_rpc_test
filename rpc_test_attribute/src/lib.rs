@@ -34,19 +34,27 @@ pub fn rpc_test(args: TokenStream, input: TokenStream) -> TokenStream {
         #[tokio::test]
         async fn #name() {
             let config = rpc_test::test_config::TestConfig::new("./secret.json").unwrap();
-            let alchemy = jsonrpsee::http_client::HttpClientBuilder::default().build(config.alchemy).unwrap();
+            let alchemy = jsonrpsee::http_client::HttpClientBuilder::default().build(config.alchemy)
+                .with_context(|| "Could not set up Alchemy client")
+                .unwrap();
+            let deoxys = jsonrpsee::http_client::HttpClientBuilder::default().build(config.deoxys)
+                .with_context(|| "Could not set up Deoxys client")
+                .unwrap();
 
             let path = #arg_test;
             let test_data = rpc_test::test_data::TestData::new(path)
                 .with_context(|| format!("Could not retrieve test data from {path}"))
                 .unwrap();
 
-            let response: #arg_struct = #arg_struct::call(&alchemy, &test_data.cmd, test_data.arg).await
-                .with_context(|| format!("Error waiting for rpc call response in test {path}"))
+            let response_alchemy: #arg_struct = #arg_struct::call(&alchemy, &test_data.cmd, test_data.arg.clone()).await
+                .with_context(|| format!("Error waiting for rpc call response from Alchemy in test {path}"))
                 .unwrap();
 
-            // FIXME: compare expected to deoxis call
-            assert_eq!(1, 0);
+            let response_deoxys: #arg_struct = #arg_struct::call(&deoxys, &test_data.cmd, test_data.arg.clone()).await
+                .with_context(|| format!("Error waiting for rpc call response from Deoxys in test {path}"))
+                .unwrap();
+
+            assert_eq!(response_deoxys, response_alchemy);
         }       
     };
 
