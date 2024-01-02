@@ -1,6 +1,8 @@
 {
     "rust-analyzer.linkedProjects": [
+        "./test/Cargo.toml",
         "./rpc_test/Cargo.toml",
+        "./rpc_test_attribute/Cargo.toml",
         "./rpc_call/Cargo.toml",
         "./rpc_call_derive/Cargo.toml"
     ],

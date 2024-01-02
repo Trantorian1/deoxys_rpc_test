@@ -1,6 +1,8 @@
 [workspace]
 members = [
+    "test",
     "rpc_test",
+    "rpc_test_attribute",
     "rpc_call",
     "rpc_call_derive",
 ]

@@ -915,12 +915,16 @@ name = "rpc_test"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "jsonrpsee",
- "rpc_call",
- "rpc_call_derive",
  "serde",
  "serde_json",
- "tokio",
+]
+
+[[package]]
+name = "rpc_test_attribute"
+version = "0.1.0"
+dependencies = [
+ "quote",
+ "syn 2.0.46",
 ]
 
 [[package]]
@@ -1217,6 +1221,21 @@ dependencies = [
  "proc-macro2",
  "quote",
  "unicode-ident",
+]
+
+[[package]]
+name = "test"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "jsonrpsee",
+ "rpc_call",
+ "rpc_call_derive",
+ "rpc_test",
+ "rpc_test_attribute",
+ "serde",
+ "serde_json",
+ "tokio",
 ]
 
 [[package]]
